@@ -258,15 +258,21 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "chromadb" },
+    { name = "colorama" },
     { name = "langchain" },
     { name = "langchain-ollama" },
+    { name = "python-dotenv" },
+    { name = "typer" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "chromadb", specifier = ">=1.0.13" },
+    { name = "colorama", specifier = ">=0.4.6" },
     { name = "langchain", specifier = ">=0.3.26" },
     { name = "langchain-ollama", specifier = ">=0.3.3" },
+    { name = "python-dotenv", specifier = ">=1.1.1" },
+    { name = "typer", specifier = ">=0.16.0" },
 ]
 
 [[package]]
