@@ -7,6 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from rich import print
 from rich.prompt import Prompt
 import sqlite3
+from tools import hasher
 import typer
 
 load_dotenv()
@@ -34,17 +35,19 @@ msgs = []
 def chat():
     message = Prompt.ask("[bold blue]user")
     
-    while message != "/quit":
+    while message != "/quit" or message != "/q":
         msgs.append(message)
         print("[bold red]system:", end=" ")
         for chunk in chain.stream({"msgs": msgs}):
             print(chunk, end='')
 
-        message = Prompt.ask("\n[bold blue]user")
+        print()
+        message = Prompt.ask("[bold blue]user")
 
-def goodbye(name: str):
-    print(f"Goodbye, {name}")
-    raise typer.Exit()
+@app.command()
+def save_files():
+    for hash in hasher.start_hashing():
+        print(hash)
 
 def save_to_db():
     with sqlite3.connect('document.db') as connection:
