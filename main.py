@@ -7,7 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from rich import print
 from rich.prompt import Prompt
 import sqlite3
-from tools import hasher
+from tools import db, hasher
 import typer
 
 load_dotenv()
@@ -46,8 +46,10 @@ def chat():
 
 @app.command()
 def save_files():
-    for hash in hasher.start_hashing():
-        print(hash)
+    hashes = hasher.start_hashing()
+    with db.HashDB("file_hashes.db") as b:
+        b.initialize_db()
+        b.save_hashes(hashes)
 
 def save_to_db():
     with sqlite3.connect('document.db') as connection:

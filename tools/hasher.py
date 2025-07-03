@@ -15,7 +15,7 @@ def hash_folder(folder, algo='sha256'):
     for file_path in folder_path.rglob('*'):
         if file_path.is_file():
             file_hash_str = file_hash(file_path, algo)
-            hashes.append(file_hash_str)
+            hashes.append((str(file_path), file_hash_str))
 
     return hashes
 
