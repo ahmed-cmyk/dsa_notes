@@ -32,16 +32,15 @@ msgs = []
 
 @app.command()
 def chat():
-    message = Prompt.ask("user")
+    message = Prompt.ask("[bold blue]user")
     
     while message != "/quit":
         msgs.append(message)
-        print("system:", end=" ")
+        print("[bold red]system:", end=" ")
         for chunk in chain.stream({"msgs": msgs}):
             print(chunk, end='')
 
-        print("\n")
-        message = Prompt.ask("user")
+        message = Prompt.ask("\n[bold blue]user")
 
 def goodbye(name: str):
     print(f"Goodbye, {name}")
