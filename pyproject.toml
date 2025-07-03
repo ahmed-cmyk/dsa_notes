@@ -13,5 +13,7 @@ dependencies = [
     "langchain-ollama>=0.3.3",
     "markdown>=3.8.2",
     "python-dotenv>=1.1.1",
+    "textual>=3.5.0",
+    "textual-dev>=1.7.0",
     "typer>=0.16.0",
 ]
