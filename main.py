@@ -5,9 +5,12 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from rich import print
+from rich.panel import Panel
 from rich.prompt import Prompt
 import sqlite3
-from tools import db, hasher, vector_store
+from embeddings.vector_store import VectorStore
+from embeddings.hasher import Hasher
+from tools import db
 import typer
 
 load_dotenv()
@@ -35,7 +38,7 @@ msgs = []
 def chat():
     message = Prompt.ask("[bold blue]user")
     
-    while message != "/quit" or message != "/q":
+    while message != "/quit" and message != "/q":
         msgs.append(message)
         print("[bold red]system:", end=" ")
         for chunk in chain.stream({"msgs": msgs}):
@@ -46,12 +49,13 @@ def chat():
 
 @app.command()
 def save_files():
+    hasher = Hasher(['./algorithms', './data_structures'])
     hashes = hasher.start_hashing()
     with db.HashDB("file_hashes.db") as b:
         b.initialize_db()
         b.save_hashes(hashes)
 
-    vs = vector_store.VectorStore(
+    vs = VectorStore(
         embedding_model=os.environ.get("EMBEDDING_MODEL", "nomic-text-embed"),
         db_path="file_hashes.db",
         use_plaintext=True  # set False if you want raw Markdown
