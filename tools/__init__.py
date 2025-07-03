@@ -1,1 +1,1 @@
-__all__ = ['db', 'hasher']
+__all__ = ['db', 'hasher', 'vector_store']

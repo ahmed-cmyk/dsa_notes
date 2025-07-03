@@ -7,7 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from rich import print
 from rich.prompt import Prompt
 import sqlite3
-from tools import db, hasher
+from tools import db, hasher, vector_store
 import typer
 
 load_dotenv()
@@ -50,6 +50,13 @@ def save_files():
     with db.HashDB("file_hashes.db") as b:
         b.initialize_db()
         b.save_hashes(hashes)
+
+    vs = vector_store.VectorStore(
+        embedding_model=os.environ.get("EMBEDDING_MODEL", "nomic-text-embed"),
+        db_path="file_hashes.db",
+        use_plaintext=True  # set False if you want raw Markdown
+    )
+    vs.embed_documents()
 
 def save_to_db():
     with sqlite3.connect('document.db') as connection:
