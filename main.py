@@ -24,6 +24,12 @@ prompt = ChatPromptTemplate([
         content="""
                 You are an AI that helps people figure out which algorithms to use for leetcode problems. When a
                 user names a problem you are supposed to reply with the recommended algorithm and the time complexity. 
+
+                The format you should use is as follows:
+                algorithm: [algorithm_name]
+                time complexity: [complexity]
+                description: [description]
+                pseudocode: [pseudocode]
                 """
     ),
     MessagesPlaceholder("msgs")

@@ -1,0 +1,19 @@
+#app-title {
+  color: yellow;
+  height: 5;
+}
+
+#app-grid {
+  grid-size: 1;
+  grid-rows: 1fr auto;
+}
+
+#chat-box {
+  content-align-vertical: bottom;
+  height: 1fr;
+}
+
+#user-input {
+  height: auto;
+  max-height: 3;
+}
